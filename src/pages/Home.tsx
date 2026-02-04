@@ -1,8 +1,10 @@
 import logoImg from "@assets/téléchargement_(1)_1769676206860.png";
+import heroImg from "@/img/soleil.JPG";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { motion } from "framer-motion"; // הוספת אנימציות
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,16 +32,12 @@ import {
   HandHeart,
   Lightbulb,
   Clock,
-  Users,
-  Gift,
-  Timer,
-  CheckCircle,
-  Quote
+  CheckCircle
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { insertContactSchema } from "@shared/schema";
 
-const heroImage = "https://cdn.ailandingpage.ai/landingpage_io/user-generate/3706901d-71b8-466b-b92c-c547ec57641e/3706901d-71b8-466b-b92c-c547ec57641e/hero/hero-main-b71d1d7307964dccb0409ae9e22944a1.png";
+const heroImage = heroImg;
 const feature1 = "https://cdn.ailandingpage.ai/landingpage_io/user-generate/3706901d-71b8-466b-b92c-c547ec57641e/3706901d-71b8-466b-b92c-c547ec57641e/features/features-1-ae1ef5d2a75e4534b0e0b895db61b9a8.png";
 const feature2 = "https://cdn.ailandingpage.ai/landingpage_io/user-generate/3706901d-71b8-466b-b92c-c547ec57641e/3706901d-71b8-466b-b92c-c547ec57641e/features/features-2-33187eef7dd7484fab73fdca0794a31b.png";
 const feature3 = "https://cdn.ailandingpage.ai/landingpage_io/user-generate/3706901d-71b8-466b-b92c-c547ec57641e/3706901d-71b8-466b-b92c-c547ec57641e/features/features-3-5b6402d461444efcb875b25b7a63c98b.png";
@@ -127,313 +125,288 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation / Logo Area */}
-      <nav className="absolute top-0 left-0 right-0 z-50 p-6 flex justify-center items-center pointer-events-none" dir="rtl">
-        <div className="pointer-events-auto">
-          <img 
-            src={logoImg} 
-            alt="חלי לב - לוגו" 
-            className="h-24 md:h-32 w-auto object-contain drop-shadow-xl"
-            data-testid="img-logo"
-          />
-        </div>
-      </nav>
-
+    <div className="min-h-screen selection:bg-primary/20">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" data-testid="section-hero">
-        <div className="absolute inset-0">
+      <section className="relative min-h-screen flex items-center justify-center text-center" data-testid="section-hero">
+        <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
             alt="אישה רגועה ומחוברת לעצמה"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover brightness-[0.4]"
             data-testid="img-hero"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-black/70 via-black/50 to-black/30" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-4 py-20">
-          <div className="max-w-2xl text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-testid="text-hero-title">
+        <div className="relative z-10 container mx-auto px-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto flex flex-col items-center"
+          >
+            <img 
+              src={logoImg} 
+              alt="חלי לב - לוגו" 
+              className="h-28 md:h-40 w-auto object-contain drop-shadow-2xl mb-12"
+              data-testid="img-logo-hero"
+            />
+
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] text-white drop-shadow-lg" data-testid="text-hero-title">
               מקשר רעיל<br />
               <span className="text-primary">לחיים חופשיים</span>
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-white/90 leading-relaxed" data-testid="text-hero-subtitle">
+            <p className="text-xl md:text-2xl mb-6 text-white max-w-2xl leading-relaxed drop-shadow-md" data-testid="text-hero-subtitle">
               ליווי רגשי עדין ומעמיק לנשים שיוצאות מקשרים רעילים - לחזרה לעצמן, לביטחון פנימי ולשקט שמגיע להן
             </p>
-            
-            <blockquote className="border-r-4 border-primary pr-4 mb-8 text-white/80 italic" data-testid="text-hero-quote">
+            <p className="text-lg italic text-white/90 mb-10 max-w-2xl leading-relaxed drop-shadow-sm border-r-2 border-primary/50 pr-4" data-testid="text-hero-testimonial">
               "הוא גרם לי להאמין שאני המשוגעת... לא ידעתי איך לצאת מזה"
-              <p className="mt-2 text-sm not-italic">זה בדיוק מה שאמרה לי מטופלת אחרי הפגישה הראשונה - <strong>במחיר סמלי</strong></p>
-            </blockquote>
+              <br />
+              <span className="text-base not-italic font-medium">זה בדיוק מה שאמרה לי מטופלת אחרי הפגישה הראשונה - במחיר סמלי</span>
+            </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <div className="flex flex-col items-center gap-6">
               <Button 
                 size="lg" 
-                className="text-lg px-8"
+                className="text-lg px-10 py-7 rounded-full shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 data-testid="button-hero-cta"
               >
                 קבעי פגישה ראשונה עכשיו
               </Button>
-              <p className="text-white/70 text-sm" data-testid="text-hero-offer">
-                הפגישה הראשונה במחיר סמלי של 49 ₪ בלבד
-              </p>
+              <div>
+                <p className="text-white font-semibold drop-shadow-md" data-testid="text-hero-offer">
+                  פגישה ראשונה במחיר סמלי של 
+                </p>
+                <p className="text-white/80 text-sm drop-shadow-md">
+                  49 ₪ בלבד 
+                </p>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Treatment Approach Section */}
-      <section className="py-20 bg-card" data-testid="section-treatment">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-treatment-title">
+      <section className="py-24 bg-secondary/30" data-testid="section-treatment">
+        <div className="container mx-auto px-6">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="text-treatment-title">
               הטיפול "<span className="text-primary">Toxic Free</span>"
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto" data-testid="text-treatment-subtitle">
+            <div className="w-24 h-1 bg-primary/20 mx-auto mb-8 rounded-full" />
+            <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed" data-testid="text-treatment-subtitle">
               שילוב נדיר של חמלה רכה עם עמידה איתנה על עקרונות - הגישה הטיפולית שמחזירה לך את השליטה על חייך
             </p>
-          </div>
+          </motion.div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="overflow-hidden hover-elevate" data-testid="card-feature-1">
-              <img src={feature1} alt="זיהוי נורות אדום" className="w-full h-48 object-cover" />
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Eye className="w-6 h-6 text-primary" />
-                  <h3 className="text-xl font-semibold">זיהוי נורות אדום</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  למידה לזהות מנגנוני שליטה ודפוסים רעילים שמופעלים עליך - כדי שלא תיפלי בהם שוב
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="overflow-hidden hover-elevate" data-testid="card-feature-2">
-              <img src={feature2} alt="תמיכה רגשית מלאה" className="w-full h-48 object-cover" />
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <HandHeart className="w-6 h-6 text-primary" />
-                  <h3 className="text-xl font-semibold">תמיכה רגשית מלאה</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  מרחב בטוח ולא שיפוטי, מתוך ניסיון אישי ומקצועי עמוק - כאן לא צריך "להיות חזקות"
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="overflow-hidden hover-elevate" data-testid="card-feature-3">
-              <img src={feature3} alt="שינוי פנימי מיידי" className="w-full h-48 object-cover" />
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Sparkles className="w-6 h-6 text-primary" />
-                  <h3 className="text-xl font-semibold">שינוי פנימי מיידי</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  תחושת מסוגלות ושינוי פנימי כבר מהמפגש הראשון - לא עוד שיחה רגילה אלא התחלה של חיים חדשים
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              { img: feature1, icon: Eye, title: "זיהוי נורות אדום", text: "למידה לזהות מנגנוני שליטה ודפוסים רעילים שמופעלים עליך - כדי שלא תיפלי בהם שוב", testId: "card-feature-1" },
+              { img: feature2, icon: HandHeart, title: "תמיכה רגשית מלאה", text: "מרחב בטוח ולא שיפוטי, מתוך ניסיון אישי ומקצועי עמוק - כאן לא צריך \"להיות חזקות\"", testId: "card-feature-2" },
+              { img: feature3, icon: Sparkles, title: "שינוי פנימי מיידי", text: "תחושת מסוגלות ושינוי פנימי כבר מהמפגש הראשון - לא עוד שיחה רגילה אלא התחלה של חיים חדשים", testId: "card-feature-3" }
+            ].map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <Card className="border-none shadow-xl shadow-foreground/5 bg-background hover:translate-y-[-8px] transition-all duration-300" data-testid={f.testId}>
+                  <div className="aspect-[16/10] overflow-hidden rounded-t-[inherit]">
+                    <img src={f.img} alt={f.title} className="w-full h-full object-cover" />
+                  </div>
+                  <CardContent className="p-8">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="p-3 bg-primary/10 rounded-xl">
+                        <f.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold">{f.title}</h3>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">{f.text}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Principles Section */}
-      <section className="py-20" data-testid="section-principles">
-        <div className="container mx-auto px-4">
-          <h3 className="text-2xl font-bold text-center mb-12" data-testid="text-principles-title">העקרונות המנחים אותי</h3>
+      <section className="py-24" data-testid="section-principles">
+        <div className="container mx-auto px-6">
+          <h3 className="text-3xl font-bold text-center mb-16" data-testid="text-principles-title">העקרונות המנחים אותי</h3>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-6 text-center hover-elevate" data-testid="card-principle-1">
-              <Shield className="w-10 h-10 text-accent mx-auto mb-4" />
-              <h4 className="font-semibold mb-2">אין בעיה באישה</h4>
-              <p className="text-sm text-muted-foreground">
-                הייתה הסתגלות למציאות פוגעת - עכשיו לומדים דרך חדשה
-              </p>
-            </Card>
-            
-            <Card className="p-6 text-center hover-elevate" data-testid="card-principle-2">
-              <Heart className="w-10 h-10 text-accent mx-auto mb-4" />
-              <h4 className="font-semibold mb-2">ריפוי בקשר</h4>
-              <p className="text-sm text-muted-foreground">
-                לא בכוח או סיסמאות, אלא דרך חיבור מחדש לגוף ולרגש
-              </p>
-            </Card>
-            
-            <Card className="p-6 text-center hover-elevate" data-testid="card-principle-3">
-              <Lightbulb className="w-10 h-10 text-accent mx-auto mb-4" />
-              <h4 className="font-semibold mb-2">הבנה + כלים</h4>
-              <p className="text-sm text-muted-foreground">
-                עומק רגשי עם עבודה יומיומית שמחזירה שליטה
-              </p>
-            </Card>
-            
-            <Card className="p-6 text-center hover-elevate" data-testid="card-principle-4">
-              <Clock className="w-10 h-10 text-accent mx-auto mb-4" />
-              <h4 className="font-semibold mb-2">הקצב שלך</h4>
-              <p className="text-sm text-muted-foreground">
-                הקשבה אמיתית למוכנות הפנימית - בלי לחץ
-              </p>
-            </Card>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: Shield, title: "אין בעיה באישה", text: "הייתה הסתגלות למציאות פוגעת - עכשיו לומדים דרך חדשה", testId: "card-principle-1" },
+              { icon: Heart, title: "ריפוי בקשר", text: "לא בכוח או סיסמאות, אלא דרך חיבור מחדש לגוף ולרגש", testId: "card-principle-2" },
+              { icon: Lightbulb, title: "הבנה + כלים", text: "עומק רגשי עם עבודה יומיומית שמחזירה שליטה", testId: "card-principle-3" },
+              { icon: Clock, title: "הקצב שלך", text: "הקשבה אמיתית למוכנות הפנימית - בלי לחץ", testId: "card-principle-4" }
+            ].map((p, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="p-8 rounded-3xl bg-background border border-border/50 hover:border-primary/20 transition-colors text-center" 
+                data-testid={p.testId}
+              >
+                <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <p.icon className="w-8 h-8 text-accent" />
+                </div>
+                <h4 className="text-xl font-bold mb-3">{p.title}</h4>
+                <p className="text-muted-foreground leading-relaxed">{p.text}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-card" data-testid="section-benefits">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+      <section className="py-24 bg-secondary/20" data-testid="section-benefits">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ x: -30, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              className="order-2 lg:order-1 relative"
+            >
               <img 
                 src={benefitsImage} 
                 alt="אישה מאושרת וחופשית" 
-                className="rounded-lg shadow-xl w-full"
+                className="rounded-[2rem] shadow-2xl w-full relative z-10"
                 data-testid="img-benefits"
               />
-            </div>
+            </motion.div>
             
             <div className="order-1 lg:order-2">
-              <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-benefits-title">
+              <h2 className="text-4xl md:text-5xl font-bold mb-10 leading-tight" data-testid="text-benefits-title">
                 מה שנשים חוות<br />
                 <span className="text-primary">במהלך הליווי</span>
               </h2>
               
-              <div className="space-y-6">
-                <div className="flex gap-4" data-testid="benefit-item-1">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">מבלבול לבהירות</h4>
-                    <p className="text-muted-foreground text-sm">
-                      ירידה הדרגתית בעוצמת הכמיהה והבלבול, הבנה רגשית (לא רק שכלית) של מה קרה בקשר
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4" data-testid="benefit-item-2">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">מתלות לעצמאות</h4>
-                    <p className="text-muted-foreground text-sm">
-                      חיזוק ביטחון פנימי ויכולת בחירה, בניית גבולות רגשיים בריאים
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4" data-testid="benefit-item-3">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">חזרה לעצמן</h4>
-                    <p className="text-muted-foreground text-sm">
-                      חיבור מחדש לעצמן, לרצון ולחיים - שקט פנימי ויציבות רגשית
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4" data-testid="benefit-item-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <HandHeart className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">פתיחת הלב מחדש</h4>
-                    <p className="text-muted-foreground text-sm">
-                      יכולת לפתוח את הלב מחדש לקשר בריא - בלי לאבד את עצמן
-                    </p>
-                  </div>
-                </div>
+              <div className="space-y-8">
+                {[
+                  { icon: Sparkles, title: "מבלבול לבהירות", text: "ירידה הדרגתית בעוצמת הכמיהה והבלבול, הבנה רגשית (לא רק שכלית) של מה קרה בקשר" },
+                  { icon: Shield, title: "מתלות לעצמאות", text: "חיזוק ביטחון פנימי ויכולת בחירה, בניית גבולות רגשיים בריאים" },
+                  { icon: Heart, title: "חזרה לעצמן", text: "חיבור מחדש לעצמן, לרצון ולחיים - שקט פנימי ויציבות רגשית" },
+                  { icon: HandHeart, title: "פתיחת הלב מחדש", text: "יכולת לפתוח את הלב מחדש לקשר בריא - בלי לאבד את עצמן" }
+                ].map((benefit, i) => (
+                  <motion.div 
+                    key={i} 
+                    initial={{ x: 20, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-6 items-start" 
+                    data-testid={`benefit-item-${i+1}`}
+                  >
+                    <div className="flex-shrink-0 w-14 h-14 bg-background rounded-2xl shadow-sm flex items-center justify-center">
+                      <benefit.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">{benefit.title}</h4>
+                      <p className="text-muted-foreground leading-relaxed">{benefit.text}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
               
-              <div className="mt-8 p-4 bg-muted rounded-lg" data-testid="text-benefits-cta-box">
-                <p className="text-center font-medium">
+              <div className="mt-12 p-8 bg-primary/5 border border-primary/10 rounded-3xl flex flex-col items-center gap-6" data-testid="text-benefits-cta-box">
+                <p className="text-center text-lg font-medium">
                   זה לא אימון של "תתגברי"<br />
-                  <span className="text-primary">זה תהליך של חזרה הביתה</span>
+                  <span className="text-primary font-bold text-2xl mt-2 block">זה תהליך של חזרה הביתה</span>
                 </p>
+                <Button 
+                  className="rounded-full px-8 py-4 text-base shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  התחילי את המסע שלך עוד היום
+                </Button>
               </div>
-              
-              <Button 
-                className="mt-6 w-full sm:w-auto"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                data-testid="button-benefits-cta"
-              >
-                התחילי את המסע שלך עוד היום
-              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20" data-testid="section-testimonials">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-testimonials-title">נשים שבחרו לשחרר עצמן</h2>
-            <p className="text-muted-foreground" data-testid="text-testimonials-subtitle">
+      <section className="py-24 overflow-hidden" data-testid="section-testimonials">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="text-testimonials-title">נשים שבחרו לשחרר עצמן</h2>
+            <p className="text-muted-foreground text-xl" data-testid="text-testimonials-subtitle">
               סיפורים אמיתיים של נשים שעברו את התהליך וחזרו לעצמן
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="p-6" data-testid="card-testimonial-1">
-              <div className="flex items-center gap-4 mb-4">
-                <img 
-                  src={testimonial1} 
-                  alt="שרה מ." 
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold">שרה מ.</h4>
-                  <p className="text-sm text-muted-foreground">גרושה, אמא לשניים</p>
-                </div>
-              </div>
-              <div className="relative">
-                <Quote className="w-8 h-8 text-primary/20 absolute -top-2 -right-2" />
-                <blockquote className="text-muted-foreground pr-6">
-                  "אחרי 3 שנים של קשר רעיל, הגעתי לחלי מותשת לחלוטין. חשבתי שאני משוגעת, שאני זו שגורמת לכל הבעיות. הפגישה הראשונה החינמית פתחה לי את העיניים - הבנתי שאני לא לבד ושיש דרך החוצה. התהליך עם חלי החזיר לי את עצמי, את הביטחון שלי ואת השמחה. היום אני יודעת מה הגבולות שלי ולא מפחדת לעמוד עליהם."
-                </blockquote>
-              </div>
-              <p className="text-sm text-primary font-medium mt-4">שינוי מלא תוך 4 חודשים</p>
-            </Card>
-            
-            <Card className="p-6" data-testid="card-testimonial-2">
-              <div className="flex items-center gap-4 mb-4">
-                <img 
-                  src={testimonial2} 
-                  alt="מיכל ר." 
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold">מיכל ר.</h4>
-                  <p className="text-sm text-muted-foreground">מנהלת פרויקטים</p>
-                </div>
-              </div>
-              <div className="relative">
-                <Quote className="w-8 h-8 text-primary/20 absolute -top-2 -right-2" />
-                <blockquote className="text-muted-foreground pr-6">
-                  "הייתי במערכת יחסים שבה הרגשתי שאני הולכת על ביצים כל הזמן. כל דבר שעשיתי היה 'לא נכון'. חלי עזרה לי להבין שזה לא אני - זה היה גזלייטינג. היא לימדה אותי לזהות את הדפוסים ולבנות גבולות בריאים. הכי חשוב - היא הייתה שם בשבילי בכל שלב, בלי שיפוטים. היום אני במקום אחר לגמרי, חזקה ובטוחה בעצמי."
-                </blockquote>
-              </div>
-              <p className="text-sm text-primary font-medium mt-4">חזרה לביטחון עצמי תוך 6 שבועות</p>
-            </Card>
+          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            {[
+              {
+                name: "שרה מ.",
+                role: "גרושה, אמא לשניים",
+                img: testimonial1,
+                quote: "אחרי 3 שנים של קשר רעיל, הגעתי לחלי מותשת לחלוטין. חשבתי שאני משוגעת, שאני זו שגורמת לכל הבעיות. הפגישה הראשונה החינמית פתחה לי את העיניים - הבנתי שאני לא לבד ושיש דרך החוצה. התהליך עם חלי החזיר לי את עצמי, את הביטחון שלי ואת השמחה.",
+                time: "שינוי מלא תוך 4 חודשים"
+              },
+              {
+                name: "מיכל ר.",
+                role: "מנהלת פרויקטים",
+                img: testimonial2,
+                quote: "הייתי במערכת יחסים שבה הרגשתי שאני הולכת על ביצים כל הזמן. כל דבר שעשיתי היה 'לא נכון'. חלי עזרה לי להבין שזה לא אני - זה היה גזלייטינג. היא לימדה אותי לזהות את הדפוסים ולבנות גבולות בריאים. היום אני במקום אחר לגמרי, חזקה ובטוחה בעצמי.",
+                time: "חזרה לביטחון עצמי תוך 6 שבועות"
+              }
+            ].map((t, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-10 border-none shadow-2xl shadow-foreground/5 bg-background relative" data-testid={`card-testimonial-${i+1}`}>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-5 mb-8">
+                      <img src={t.img} alt={t.name} className="w-20 h-20 rounded-2xl object-cover ring-4 ring-primary/5" />
+                      <div>
+                        <h4 className="text-xl font-bold">{t.name}</h4>
+                        <p className="text-sm text-muted-foreground">{t.role}</p>
+                      </div>
+                    </div>
+                    <blockquote className="text-lg text-foreground/80 leading-relaxed mb-6 italic">
+                      "{t.quote}"
+                    </blockquote>
+                    <p className="text-sm text-primary font-bold tracking-wide uppercase">{t.time}</p>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
           </div>
           
-          <p className="text-center text-muted-foreground mt-8" data-testid="text-testimonials-count">
-            <strong className="text-foreground">מעל 200 נשים</strong> כבר בחרו לשחרר עצמן
-          </p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-16"
+          >
+            <p className="text-1xl md:text-2xl font-bold text-primary">
+              מעל 200 נשים כבר בחרו לשחרר עצמן
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-card" data-testid="section-faq">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-faq-title">שאלות נפוצות</h2>
-            <p className="text-muted-foreground" data-testid="text-faq-subtitle">
+      <section className="py-24 bg-background" data-testid="section-faq">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="text-faq-title">שאלות נפוצות</h2>
+            <p className="text-muted-foreground text-xl" data-testid="text-faq-subtitle">
               תשובות לשאלות שנשים שואלות לפני שהן מתחילות את התהליך
             </p>
           </div>
@@ -444,15 +417,15 @@ export default function Home() {
                 <AccordionItem 
                   key={index} 
                   value={`item-${index}`} 
-                  className="bg-background rounded-lg px-6"
+                  className="bg-background border-none rounded-2xl px-8 shadow-sm hover:shadow transition-shadow"
                 >
                   <AccordionTrigger 
-                    className="text-right" 
+                    className="text-right text-lg font-bold py-6 hover:no-underline" 
                     data-testid={`accordion-faq-${index + 1}`}
                   >
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
+                  <AccordionContent className="text-muted-foreground text-lg pb-6 leading-relaxed">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -463,174 +436,167 @@ export default function Home() {
       </section>
 
       {/* CTA / Contact Section */}
-      <section id="contact" className="py-20 relative overflow-hidden" data-testid="section-contact">
-        <div className="absolute inset-0">
+      <section id="contact" className="py-24 relative overflow-hidden" data-testid="section-contact">
+        <div className="absolute inset-0 z-0">
           <img
             src={ctaImage}
             alt="חלי במשרד הטיפולי"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover brightness-[0.4]"
             data-testid="img-contact"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/70 to-black/50" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-contact-title">
-                הרגע שלך להתחיל מחדש
+        <div className="relative z-10 container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-5xl md:text-6xl font-bold mb-8 leading-tight text-white" data-testid="text-contact-title">
+                הרגע שלך<br /><span className="text-primary">להתחיל מחדש</span>
               </h2>
-              <p className="text-white/90 mb-8" data-testid="text-contact-subtitle">
+              <p className="text-xl text-white mb-10 leading-relaxed" data-testid="text-contact-subtitle">
                 הפגישה הראשונה שלנו היא במחיר סמלי בלבד. בלי התחייבות, בלי לחץ - רק מרחב בטוח להבין מה קורה ולראות איך אני יכולה לעזור לך.
               </p>
               
-              <div className="space-y-4">
-                <h3 className="font-semibold text-lg">מה תקבלי במפגש החינמי:</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-3" data-testid="text-contact-benefit-1">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-white/90">הבנה ברורה של המצב שלך</span>
-                  </li>
-                  <li className="flex items-center gap-3" data-testid="text-contact-benefit-2">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-white/90">זיהוי דפוסים רעילים בקשר</span>
-                  </li>
-                  <li className="flex items-center gap-3" data-testid="text-contact-benefit-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-white/90">כלים ראשונים להתמודדות</span>
-                  </li>
-                  <li className="flex items-center gap-3" data-testid="text-contact-benefit-4">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-white/90">תחושת הקלה ותמיכה אמיתית</span>
-                  </li>
-                </ul>
+              <div className="grid gap-4">
+                {[
+                  "הבנה ברורה של המצב שלך",
+                  "זיהוי דפוסים רעילים בקשר",
+                  "כלים ראשונים להתמודדות",
+                  "תחושת הקלה ותמיכה אמיתית"
+                ].map((text, i) => (
+                  <div key={i} className="flex items-center gap-4 group" data-testid={`text-contact-benefit-${i+1}`}>
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                      <CheckCircle className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                    </div>
+                    <span className="text-lg font-medium text-white">{text}</span>
+                  </div>
+                ))}
               </div>
-            </div>
+            </motion.div>
             
-            <Card className="p-6 md:p-8" data-testid="card-contact-form">
-              <h3 className="text-xl font-bold mb-6 text-center">קבעי את הפגישה החינמית שלך עכשיו</h3>
-              
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>שם מלא</FormLabel>
-                        <FormControl>
-                          <Input {...field} data-testid="input-name" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>אימייל</FormLabel>
-                        <FormControl>
-                          <Input type="email" {...field} data-testid="input-email" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>טלפון</FormLabel>
-                        <FormControl>
-                          <Input type="tel" {...field} data-testid="input-phone" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>ספרי לי קצת על עצמך (אופציונלי)</FormLabel>
-                        <FormControl>
-                          <Textarea rows={3} {...field} data-testid="input-message" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
-                    size="lg"
-                    disabled={contactMutation.isPending}
-                    data-testid="button-submit-contact"
-                  >
-                    {contactMutation.isPending ? "שולחת..." : "שליחה"}
-                  </Button>
-                  
-                  <p className="text-xs text-center text-muted-foreground">
-                    המקומות מוגבלים • הפגישה נקבעת תוך 24-48 שעות
-                  </p>
-                </form>
-              </Form>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              <Card className="p-10 border-none shadow-2xl bg-background rounded-[2rem]" data-testid="card-contact-form">
+                <h3 className="text-2xl font-bold mb-8 text-center">קבעי את הפגישה שלך עכשיו</h3>
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>שם מלא</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="rounded-xl h-12 bg-background" data-testid="input-name" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>אימייל</FormLabel>
+                            <FormControl>
+                              <Input type="email" {...field} className="rounded-xl h-12 bg-background" data-testid="input-email" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>טלפון</FormLabel>
+                            <FormControl>
+                              <Input type="tel" {...field} className="rounded-xl h-12 bg-background" data-testid="input-phone" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>ספרי לי קצת על עצמך (אופציונלי)</FormLabel>
+                          <FormControl>
+                            <Textarea rows={4} {...field} className="rounded-xl bg-background resize-none" data-testid="input-message" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button 
+                      type="submit" 
+                      className="w-full h-14 text-lg rounded-xl shadow-lg shadow-primary/20" 
+                      disabled={contactMutation.isPending}
+                      data-testid="button-submit-contact"
+                    >
+                      {contactMutation.isPending ? "שולחת..." : "שליחה"}
+                    </Button>
+                    
+                    <p className="text-sm text-center text-muted-foreground">
+                      המקומות מוגבלים • הפגישה נקבעת תוך 24-48 שעות
+                    </p>
+                  </form>
+                </Form>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-primary text-primary-foreground" data-testid="section-stats">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-3 gap-8 text-center">
+      <section className="py-20 bg-primary text-primary-foreground" data-testid="section-stats">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-3 gap-10 text-center">
             <div data-testid="stat-women">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Users className="w-6 h-6" />
-                <span className="text-3xl md:text-4xl font-bold">200+</span>
-              </div>
-              <p className="text-sm opacity-90">נשים שהשתחררו</p>
+              <span className="text-4xl md:text-6xl font-bold block mb-2">200+</span>
+              <p className="text-lg opacity-80 font-medium">נשים שהשתחררו</p>
             </div>
             
             <div data-testid="stat-free">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Gift className="w-6 h-6" />
-                <span className="text-3xl md:text-4xl font-bold">49 ₪</span>
-              </div>
-              <p className="text-sm opacity-90">פגישה ראשונה</p>
+              <span className="text-4xl md:text-6xl font-bold block mb-2">49 ₪</span>
+              <p className="text-lg opacity-80 font-medium">פגישה ראשונה</p>
             </div>
             
             <div data-testid="stat-time">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Timer className="w-6 h-6" />
-                <span className="text-3xl md:text-4xl font-bold">24-48</span>
-              </div>
-              <p className="text-sm opacity-90">שעות לקביעה</p>
+              <span className="text-4xl md:text-6xl font-bold block mb-2">24-48</span>
+              <p className="text-lg opacity-80 font-medium">שעות לקביעה</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-card border-t" data-testid="section-footer">
-        <div className="container mx-auto px-4 text-center">
-          <div className="mb-6 flex justify-center">
-            <img 
-              src={logoImg} 
-              alt="חלי לב - לוגו" 
-              className="h-16 md:h-20 w-auto object-contain opacity-80"
-              data-testid="img-footer-logo"
-            />
-          </div>
-          <p className="text-muted-foreground text-sm" data-testid="text-footer-copyright">
+      <footer className="py-16 bg-background border-t border-border/50" data-testid="section-footer">
+        <div className="container mx-auto px-6 text-center">
+          <img 
+            src={logoImg} 
+            alt="חלי לב - לוגו" 
+            className="h-20 md:h-24 w-auto object-contain mx-auto mb-8 opacity-90"
+            data-testid="img-footer-logo"
+          />
+          <p className="text-muted-foreground text-lg mb-4" data-testid="text-footer-copyright">
             © {new Date().getFullYear()} Toxic Free - חלי לב. כל הזכויות שמורות.
           </p>
         </div>
