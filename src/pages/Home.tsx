@@ -1,5 +1,6 @@
-import logoImg from "@assets/téléchargement_(1)_1769676206860.png";
+import logoImg from "@/img/logo.png";
 import heroImg from "@/img/soleil.JPG";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,7 +57,15 @@ const contactFormSchema = insertContactSchema.extend({
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -126,6 +135,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen selection:bg-primary/20 overflow-x-hidden w-full">
+      {isLoading && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background">
+          <div className="flex flex-col items-center">
+            <img src={logoImg} alt="Logo Loading" className="h-32 w-auto object-contain" />
+          </div>
+        </div>
+      )}
+      
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center text-center" data-testid="section-hero">
         <div className="absolute inset-0 z-0">
