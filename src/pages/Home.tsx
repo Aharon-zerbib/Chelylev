@@ -86,19 +86,24 @@ export default function Home() {
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
       const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        return response.json();
+      }
+      return response.text();
     },
     onSuccess: () => {
       toast({
-        title: "הפנייה נשלחה בהצלחה!",
-        description: "נחזור אליך תוך 24-48 שעות.",
+        title: "תודה שפנית אליי! ❤️",
+        description: "ההודעה שלך התקבלה בהצלחה. אני אקרא אותה בעיון ואחזור אלייך בהקדם האפשרי.",
       });
       form.reset();
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error("Erreur formulaire:", error);
       toast({
-        title: "שגיאה בשליחה",
-        description: "אנא נסי שוב מאוחר יותר.",
+        title: "אופס, משהו השתבש...",
+        description: "נראה שיש תקלה קטנה בשליחה. אל דאגה, את יכולה לנסות שוב או ליצור איתי קשר ישירות.",
         variant: "destructive",
       });
     },
